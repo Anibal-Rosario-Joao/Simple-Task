@@ -1,14 +1,8 @@
-package com.anibalofice.simpletask
+package com.anibalofice.simpletask.views
 
 import android.annotation.SuppressLint
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,19 +13,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -41,8 +31,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,8 +40,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -63,32 +49,17 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.anibalofice.simpletask.R
 import com.anibalofice.simpletask.ui.theme.TaskSimpleTheme
 import com.anibalofice.simpletask.ui.theme.primaryBlue
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            TaskSimpleTheme {
-                SignUpScreen()
-
-            }
-        }
-    }
-}
-
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun SignUpScreen(){
+fun SignInScreen(){
     var showPassword by remember { mutableStateOf(false) }
-    var inputFullName by remember { mutableStateOf("") }
     var inputEmail by remember { mutableStateOf("") }
     var inputPassWord by remember { mutableStateOf("") }
-    var inputPassWord2 by remember { mutableStateOf("") }
-    val scroolState = rememberScrollState()
-
+    val scrollState = rememberScrollState()
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background
     ){innerPadding ->
@@ -96,19 +67,19 @@ fun SignUpScreen(){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(scroolState),
+                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             Column(
                 modifier = Modifier
-                    .wrapContentSize()
+                    .fillMaxSize()
                     .padding(top = 30.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Create your account",
+                    text = "Welcome back!",
                     fontSize = 28.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -119,39 +90,6 @@ fun SignUpScreen(){
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
-                    Text(
-                        text = "Full Name",
-                        modifier = Modifier
-                            .align(alignment = Alignment.Start)
-                            .padding(start = 5.dp)
-                    )
-                    Spacer(modifier = Modifier.padding(vertical = 5.dp))
-                    OutlinedTextField(
-                        value = inputFullName,
-                        placeholder = {
-                            Text(
-                                text = "Enter your full name"
-                            )
-                        },
-                        onValueChange = {newFullName ->
-                            inputFullName = newFullName
-
-                        },
-                        colors = TextFieldDefaults.colors(
-                            focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
-                            unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary
-
-                        ),
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Person,
-                                contentDescription = "Full Name"
-                            )
-                        },
-                        modifier = Modifier
-                            .width(360.dp)
-                    )
-
                     Text(
                         text = "Email",
                         modifier = Modifier
@@ -224,45 +162,6 @@ fun SignUpScreen(){
                             .width(360.dp)
                     )
 
-                    Spacer(modifier = Modifier.padding(5.dp))
-
-                    Text(
-                        text = "Confirm Password",
-                        modifier = Modifier
-                            .align(alignment = Alignment.Start)
-                            .padding(start = 5.dp)
-                    )
-                    Spacer(modifier = Modifier.padding(vertical = 5.dp))
-                    OutlinedTextField(
-                        value = inputPassWord2,
-                        placeholder = {
-                            Text(
-                                text = "Enter your password again"
-                            )
-                        },
-                        visualTransformation = if (showPassword)
-                            VisualTransformation.None
-                        else
-                            PasswordVisualTransformation(),
-                        onValueChange = { newPassword2 ->
-                            inputPassWord2 = newPassword2
-
-                        },
-                        colors = TextFieldDefaults.colors(
-                            focusedContainerColor = MaterialTheme.colorScheme.onPrimary,
-                            unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary
-
-                        ),
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.Lock,
-                                contentDescription = "Password"
-                            )
-                        },
-                        modifier = Modifier
-                            .width(360.dp)
-                    )
-
                     Row (
                         modifier = Modifier
                             .align(Alignment.Start)
@@ -274,9 +173,9 @@ fun SignUpScreen(){
                         ) {
                             Icon(
                                 painter = if (showPassword)
-                                painterResource(R.drawable.visibility_black)
+                                    painterResource(R.drawable.visibility_black)
                                 else
-                                painterResource(R.drawable.visibility_off_black),
+                                    painterResource(R.drawable.visibility_off_black),
                                 contentDescription = "Show Password"
                             )
 
@@ -298,6 +197,24 @@ fun SignUpScreen(){
 
                     Spacer(modifier = Modifier.padding(5.dp))
 
+                    Row(
+                        modifier = Modifier
+                            .align(Alignment.End)
+
+                    ) {
+                        TextButton(
+                            onClick = {},
+                        )  {
+                            Text(
+                                text = "I forgot my password",
+                                fontStyle = FontStyle.Italic,
+                                textDecoration = TextDecoration.Underline
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.padding(5.dp))
+
                     Button(
                         modifier = Modifier
                             .width(400.dp)
@@ -311,10 +228,10 @@ fun SignUpScreen(){
                         )
                     ) {
                         Text(
-                            text = "Sign Up"
+                            text = "Sign In"
                         )
                     }
-                    SignUpDivider()
+                    SignInDivider()
 
                     Row (
                         modifier = Modifier
@@ -400,7 +317,7 @@ fun SignUpScreen(){
                             onClick = {}
                         ) {
                             Text(
-                                text = "Sign In",
+                                text = "Create account",
                                 color = primaryBlue,
                                 textDecoration = TextDecoration.Underline,
                                 modifier = Modifier
@@ -420,7 +337,7 @@ fun SignUpScreen(){
 }
 
 @Composable
-fun SignUpDivider() {
+fun SignInDivider() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -437,7 +354,7 @@ fun SignUpDivider() {
 
 
         Text(
-            text = "Or Sign Up with",
+            text = "Or Sign In with",
             modifier = Modifier.padding(horizontal = 8.dp), // Adiciona padding horizontal ao texto
             color = Color.Gray,
             fontSize = 14.sp
@@ -454,8 +371,8 @@ fun SignUpDivider() {
 
 @Preview(showBackground = true)
 @Composable
-fun SignUpScreenPreview() {
+fun SignInScreenPreview() {
     TaskSimpleTheme {
-        SignUpScreen()
+        SignInScreen()
     }
 }
